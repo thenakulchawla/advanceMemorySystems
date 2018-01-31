@@ -1,3 +1,5 @@
 !report
 report/conference*
 **.log
+**.aux
+**.pdf
