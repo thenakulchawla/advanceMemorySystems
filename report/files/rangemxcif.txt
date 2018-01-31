@@ -1,0 +1,11 @@
+While given range intersects quadtree bounding box of root:
+ If  leaf node:
+    Iterate through vector of rectangles in that leaf
+    Check whether the rectangle is within range
+    If yes add it to rectangles in range list.
+ Else:
+    Iterate through overflow list of root
+    If rectangle intersects the range add it to returnList.
+    Apply query range on NorthWest, NorthEast, SouthWest, Southeast.
+return listOfRectangles
+
