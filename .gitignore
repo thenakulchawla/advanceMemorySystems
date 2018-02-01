@@ -2,5 +2,4 @@
 report/conference*
 **.log
 **.aux
-**.pdf
 **.DS_Store
