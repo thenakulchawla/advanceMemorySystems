@@ -1,6 +1,0 @@
-While root.isEmpty() || root.size()<bucketSize
-  If yes then add the point to the root node.
-    Break;
-  If no check in which quadrant the point falls.
-    Check in which quadrant the point falls
-    Make Root = pointer of quadrant in which point falls.

@@ -1,9 +1,0 @@
-While given range intersects quadtree bounding box of root:
-  If  leaf node:
-    Iterate through vector of points in that leaf
-    Check whether the point is within range given
-    If yes add it to points in range list.
-  Else:
-    Apply query range on NorthWest, NorthEast, SouthWest, Southeast.
-return listOfPoints
-
