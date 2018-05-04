@@ -1,0 +1,55 @@
+Erasure codes:
+
+In distributed storage systems, failures are inevitable. Therefore, it is very
+important to design these systems with some high availability technique. One way
+to do it is by introducing redundancy. One of the well known techniques for
+protecting data is erasure coding. It is a widely used and accepted technology
+used in communication systems and more recently, in storage systems. In storage
+systems, erasure codes add redundancy to the system in order to tolerate
+failures. Erasure codes vary from simple coding techniques, such as a full
+replication of the data, such as RAID-1, where each byte of the data is stored
+on two disks. However, this increases the storage cost. More complex erasure
+codes, such as Reed-Solomon codes, exhibit fault tolerance with less extra
+storage compared to RAID. Thus, this is a more cost effective approach.
+
+Let's assume that our storage system consists of n disks. These disks can
+be partitioned into k disks so that these disks can hold the user data. Thus
+the remaining m=n-k disks hold the coding data. The encoding and decoding
+techniques are explained in Figure X.
+
+In the encoding process, the contents of the k data disks are used to
+calculate the contents of the m coding disks. Thus, this kind of storage
+system can handle failure of up to m disks. When any number (up to m) disks
+fail, then all the data is decoded from the up and running disks. The
+simplest erasure codes assume that each disk consists of one w-bit word.
+Optimal erasure codes are maximum distance separable codes. Optimal codes are
+expensive in terms of memory usage and CPU time for large value of n. 
+The kind of erasure coding used in this experiment are Reed-Solomon codes.
+Reed-Solomon codes are MDS codes. For disks where n<= (2^w), Reed-Solomon
+codes are usually used. For example, for storage systems which contain
+less than or equal to 256 disks, Reed-Solomon is defined for it.
+Reed-Solomon codes operate on a block of data treated as a set of finite
+field elements called symbols. For example, a block of 4096 bytes can be
+considered as a set of 2731 12 bit symbols. Here, each symbol is a finite
+field element of GF(2^12) and the last symbol is padded with four 0 bits.
+There are different ways to define the a(subscript ij) coefficients and one of
+them is the "Cauchy" construction. A distinct number n is chosen in GF(2^w) and
+then the disks are partitioned into two sets X and Y. X set has m elements
+and Y has k elements. Then, 
+
+a_ij = 1/(x_i XOR y_i),
+where the arithmetic is over GF(2^w).
+
+Any value of k and m generates result. However, they are expensive since
+complexity of multiplication in a Galois Field is more expensive then XOR. 
+
+
+
+
+
+
+
+
+
+
+
