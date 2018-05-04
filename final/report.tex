@@ -7,6 +7,7 @@
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithm,algorithmic}
 \usepackage{graphicx}
+\usepackage{booktabs}
 \usepackage{textcomp}
 \usepackage{mathptmx}
 \usepackage{enumitem}
@@ -243,7 +244,7 @@ storage compared to RAID. Thus, this is a more cost effective approach.
 Let's assume that our storage system consists of n disks. These disks can
 be partitioned into k disks so that these disks can hold the user data. Thus
 the remaining m=n-k disks hold the coding data. The encoding and decoding
-techniques are explained in Figure X.
+techniques are explained in Figure \ref{image: fig3}.
 
 In the encoding process, the contents of the k data disks are used to
 calculate the contents of the m coding disks. Thus, this kind of storage
@@ -265,16 +266,14 @@ them is the "Cauchy" construction. A distinct number n is chosen in $GF(2^w)$ an
 then the disks are partitioned into two sets X and Y. X set has m elements
 and Y has k elements. Then, 
 
-$a_ij = 1/(x_i XOR y_i),$
+$a_ij = 1/(x_i \oplus y_i),$
 where the arithmetic is over $GF(2^w)$.
 
 Any value of k and m generates result. However, they are expensive since
 complexity of multiplication in a Galois Field \cite{gfcomplete} is more expensive then XOR. 
 
-Encoding and decoding is shown in the \ref{image: fig3}
-
 \begin{figure}
-    \includegraphics[width=.8\columnwidth]{files/erasure.pna}
+    \includegraphics[width=.8\columnwidth]{files/erasure.png}
     \centering
     \caption{Erasure Encoding and Decoding }
     \label{image: fig3}
@@ -382,8 +381,25 @@ meta file is created that consists the encoding parameters.
 This meta files must be present on all the nodes that are using the sharded blockchain
 in order to recreate the data when needed for verification.
 
+
 \section{Results}
 The following accomplishments have been made during the course of this project:
+
+
+
+\begin{tabular}{|c||c||c||c|}
+    \hline
+         \textbf{k} & \textbf{m} & \textbf{Final size} &\textbf{Potential Memory saved}\\
+        \hline
+        3 & 2 &  $88K * 5 (k + m)$ & 164K \\
+        4 & 3 &  $ 64K * 7 (k + m)$ & 188K  \\
+        7 & 4 &  $40k * 11 (k + m) $ & 212K  \\
+        11 & 8 & $24K * 19 (k + m) $ & 228K \\
+        \hline
+
+\end{tabular}
+
+\vspace{1cm}
 
 \begin{enumerate}
     \item Automation scripts for a dash build have been made.
@@ -395,6 +411,16 @@ The following accomplishments have been made during the course of this project:
         so that loss of several files could still regenerate the data.
     \item Decoding script is built but not integrated because of the complications we are 
         facing in implementing Kademlia into the network.
+    \item The table shows the different sizes of erasure code file creation, and if dissipated
+        the amount of space each one takes. This when dissipated in the network can save significant space.
+        The table doesn't show the original file size, that is constant - 256K, algorithm is same i.e Reed Solomon.
+        Meta file created is constant, i.e 4K.
+
+    \item We are sharding only the blk0*.dat file, as it is required less often, it is utilized only when there
+        is a missing transaction.
+    \item We are not sharding the UTXO set that is utilized for transaction verification and is stored in LevelDB.
+    \item The potential memory save is based on the idea that we will be keeping only one part of the file in the node.
+        K here is the number of peers.
 \end{enumerate}
 
 
@@ -444,6 +470,7 @@ The following accomplishments have been made during the course of this project:
     \bibitem{gfcomplete} http://jerasure.org/gf-complete-1.02/
     \bibitem{opendht} Rhea, Sean, et al. "OpenDHT: a public DHT service and its uses." ACM SIGCOMM Computer Communication Review. Vol. 35. No. 4. ACM, 2005.
     \bibitem{raptor} Shokrollahi, Amin. "Raptor codes." IEEE transactions on information theory 52.6 (2006): 2551-2567.
+    \bibitem{pbft} Castro, Miguel, and Barbara Liskov. "Practical Byzantine fault tolerance." OSDI. Vol. 99. 1999.
 \end{thebibliography}
 
 \end{document}
